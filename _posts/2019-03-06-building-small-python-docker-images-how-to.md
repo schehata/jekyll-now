@@ -1,10 +1,6 @@
 ---
 published: true
 ---
----
-layout: post
-title:  "Building small python Docker images, How to?"
----
 
 As you might already know it’s healthy to produce small docker images with only the needed dependences for your software to work properly.
 
