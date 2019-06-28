@@ -5,7 +5,8 @@ published: true
 As you might already know it’s healthy to produce small docker images with only the needed dependences for your software to work properly.
 
 Being small in size, means more efficency in your pipeline and deployments, It’s small to download, small to push. So keep that in mind when you are building a docker image for anything.
-Generic Guidelines:
+
+## Generic Guidelines:
 
 There is some generic guidelines that you can keep in mind while building your own docker images, at the top of my mind:
 
@@ -15,7 +16,7 @@ There is some generic guidelines that you can keep in mind while building your o
     Chain your commands in one layer, meaning: one RUN command.
     I always try to use Alpine as base images first because they are small in size, they work for most of the usecases
 
-Our Dockerfile for Python
+## Our Dockerfile for Python
 
 We will write a simple Dockerfile for python and install some dependencies just for the fun of it. And here is the main points the we need to focus one:
 
@@ -27,7 +28,7 @@ We will write a simple Dockerfile for python and install some dependencies just 
     We will use apk to install those dependencies in a virtual namespace so that we can remove them with that name
     There is no need to have a virtual environment since docker container itself is an isolated environment. using virtualenv defies the purpose of docker containers.
 
-So, let’s dive in:
+**So, let’s dive in:**
 
 ```Dockerfile
 # Alpine base image that contains python 3.7
@@ -61,22 +62,23 @@ CMD python src/app.py
 
 As you can see above a simple Dockerfile that uses Python 3.7 alpine image, and applies the rules we defined above to make our image small.
 
-Also notice the syntax of apk, let’s break it down:
+**Also notice the syntax of apk, let’s break it down:**
 
-    --no-cache tells apk not to store cache files
-    --virtual .build-deps tells apk to create a virtual namespace called “.build-deps” and to install the next packages into that namespace.
-    after that the list of packages that you want to install
+ - `--no-cache` tells apk not to store cache files
+ - `--virtual .build-deps` tells apk to create a virtual namespace called “.build-deps” and to install the next packages into that namespace.
+ - after that the list of packages that you want to install
 
-What about the pip command, something special ?
+**What about the pip command, something special ?**
 
-Yes, have you noticed that --no-cache-dir it asks pip not to store cache files at all.
+Yes, have you noticed that `--no-cache-dir` it asks pip not to store cache files at all.
 
-Finally, Removing the building dependencies
+**Finally, Removing the building dependencies**
 
-In the same layer (same RUN command) we are also deleting those deps that we don’t need anymore, and they did their job building the packages during pip install ... process. The syntax is easy, we ask apk to delete the virtual namespace with all the packages that were installed to it.
+In the same layer (same RUN command) we are also deleting those deps that we don’t need anymore, and they did their job building the packages during `pip install ...` process. The syntax is easy, we ask apk to delete the virtual namespace with all the packages that were installed to it.
 
 That’s it your done ! maybe let’s check how much space have you saved after modifying your Dockerfile.
-Checking size of the images
+
+## Checking size of the images
 
 Now it’s time to check the size of the new image, probably check first the old image before modifying Dockerfile, and after, Let us now much did you reduce !
 
@@ -98,4 +100,4 @@ $ docker images | grep python
 
 in the last column, you can see the final size of the image, above there are 3 python alpine images, check the size of your old image, and then build the new image and check it’s size !
 
-That’s all folks.
+**That’s all folks.**
