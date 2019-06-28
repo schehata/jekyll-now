@@ -1,9 +1,8 @@
-----
+---
 title: What did I learn from building yadawe.com?
-layout: post
-----
+---
 
-![Yadawe's Logo]({{site.baseurl}}/public/img/yadawe/yadawe_logo.png)
+![Yadawe Logo]({{site.baseurl}}/public/img/yadawe/yadawe_logo.jpeg)
 
 Unfortunately, being a business man and a software engineer seems to be a hard equation, hard to achieve.
 
