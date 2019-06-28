@@ -1,6 +1,7 @@
 ---
 published: true
 ---
+![Docker + Python]({{site.baseurl}}/_posts/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
 
 As you might already know it’s healthy to produce small docker images with only the needed dependences for your software to work properly.
 
