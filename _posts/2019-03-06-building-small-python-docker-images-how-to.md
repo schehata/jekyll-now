@@ -1,7 +1,9 @@
 ---
+title: Building small Python Docker images, How to?
 published: true
 ---
-![Docker + Python]({{site.baseurl}}/_posts/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
+
+![Docker + Python]({{site.baseurl}}/assets/img/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
 
 As you might already know it’s healthy to produce small docker images with only the needed dependences for your software to work properly.
 
@@ -11,23 +13,23 @@ Being small in size, means more efficency in your pipeline and deployments, It�
 
 There is some generic guidelines that you can keep in mind while building your own docker images, at the top of my mind:
 
-    Make sure you don’t genereate caching files, or delete them after installations, example of tools that uses cache files: pip, apt, apk
-    Some times there is some dependency packages that you need for build step only for your project, and then they are not needed anymore, example on that is gcc. Make sure to remove these dependencies from the image.
-    Docker images consists of layers, each layer represents a command in your Dockerfile, we need to keep those layers small in size and only contain the files they need, so for example if your installing python requirements using pip, you only need the requirements file and not the whole source code, so we will make sure to only copy the requirements.txt file to Dockerimage before installing those requirements using pip, as we will see later in this article.
-    Chain your commands in one layer, meaning: one RUN command.
-    I always try to use Alpine as base images first because they are small in size, they work for most of the usecases
+ - Make sure you don’t genereate caching files, or delete them after installations, example of tools that uses cache files: pip, apt, apk
+ - Some times there is some dependency packages that you need for build step only for your project, and then they are not needed anymore, example on that is gcc. Make sure to remove these dependencies from the image.
+ - Docker images consists of layers, each layer represents a command in your Dockerfile, we need to keep those layers small in size and only contain the files they need, so for example if your installing python requirements using pip, you only need the requirements file and not the whole source code, so we will make sure to only copy the requirements.txt file to Dockerimage before installing those requirements using pip, as we will see later in this article.
+ - Chain your commands in one layer, meaning: one RUN command.
+ - I always try to use Alpine as base images first because they are small in size, they work for most of the usecases
 
 ## Our Dockerfile for Python
 
 We will write a simple Dockerfile for python and install some dependencies just for the fun of it. And here is the main points the we need to focus one:
 
-    Our base image will be alpine
-    Its always good to specifiy which python version we will work on
-    Copy the requirements.txt file only, before executing pip install
-    Installing system dependencies and pip dependencipes in the same image layer (same RUN command)
-    Make sure system dependencies that are used for building or (pip install) step only shall be removed immediately after executing pip install, It’s crucial to remove them in the same layer as the installation, otherwise the trick won’t work and those dependencies will just be copied to the next layer.
-    We will use apk to install those dependencies in a virtual namespace so that we can remove them with that name
-    There is no need to have a virtual environment since docker container itself is an isolated environment. using virtualenv defies the purpose of docker containers.
+ - Our base image will be alpine
+ - Its always good to specifiy which python version we will work on
+ - Copy the requirements.txt file only, before executing pip install
+ - Installing system dependencies and pip dependencipes in the same image layer (same RUN command)
+ - Make sure system dependencies that are used for building or (pip install) step only shall be removed immediately after executing pip install, It’s crucial to remove them in the same layer as the installation, otherwise the trick won’t work and those dependencies will just be copied to the next layer.
+  - We will use apk to install those dependencies in a virtual namespace so that we can remove them with that name
+  - There is no need to have a virtual environment since docker container itself is an isolated environment. using virtualenv defies the purpose of docker containers.
 
 **So, let’s dive in:**
 
@@ -85,7 +87,7 @@ Now it’s time to check the size of the new image, probably check first the old
 
 Using docker command in the command line, get list of images:
 
-```
+```bash
 $ docker images
 ```
 
@@ -99,6 +101,6 @@ $ docker images | grep python
   python  3.7-alpine  aadc3feb2b19  3 months ago    78.2MB
 ```
 
-in the last column, you can see the final size of the image, above there are 3 python alpine images, check the size of your old image, and then build the new image and check it’s size !
+In the last column, you can see the final size of the image, above there are 3 python alpine images, check the size of your old image, and then build the new image and check it’s size!
 
 **That’s all folks.**
