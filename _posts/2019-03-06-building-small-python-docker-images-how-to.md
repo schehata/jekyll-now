@@ -3,7 +3,7 @@ title: Building small Python Docker images, How to?
 published: true
 ---
 
-![Docker + Python]({{site.baseurl}}/img/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
+![Docker + Python]({{site.baseurl}}/public/img/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
 
 As you might already know it’s healthy to produce small docker images with only the needed dependences for your software to work properly.
 
