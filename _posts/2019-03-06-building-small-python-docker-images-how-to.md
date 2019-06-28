@@ -3,7 +3,7 @@ title: Building small Python Docker images, How to?
 published: true
 ---
 
-![Docker + Python]({{site.baseurl}}/assets/img/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
+![Docker + Python]({{site.baseurl}}/img/1*DwzfqT2E0k2hSvpj6wPgyQ.jpeg)
 
 As you might already know it’s healthy to produce small docker images with only the needed dependences for your software to work properly.
 
@@ -87,9 +87,7 @@ Now it’s time to check the size of the new image, probably check first the old
 
 Using docker command in the command line, get list of images:
 
-```bash
-$ docker images
-```
+`$ docker images`
 
 more specifically you can grep for your image name, i will just grep python
 
